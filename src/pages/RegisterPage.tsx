@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   // Form data
@@ -8,6 +9,10 @@ const RegisterPage = () => {
   // Form validation
   const [errorEmail, setErrorEmail] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
+
+  const [serverError, setServerError] = useState("");
+
+  const navigate = useNavigate();
 
   const errorEmailFunc = (email: string) => {
     if (!email) {
@@ -42,26 +47,38 @@ const RegisterPage = () => {
 
     if (emailError || passwordError) return;
 
-    console.log(1, 2);
-
-    await axios({
-      method: "POST",
-      url: "http://localhost:3000/api/auth/register",
-      data: {
-        email,
-        password,
-      },
-    }).then((res: any) => {
-      console.log(res.response.data.message);
-    });
+    try {
+      await axios({
+        method: "POST",
+        url: "http://localhost:3000/api/auth/register",
+        data: {
+          email,
+          password,
+        },
+      });
+      navigate("/dashboard");
+    } catch (error: any) {
+      const message =
+        error.response?.data?.message ||
+        "Something went wrong. Please try again.";
+      setIntervalOutFunc(message, 3000);
+    }
+  };
+  const setIntervalOutFunc = (message: string, time: number) => {
+    setServerError(message);
+    setTimeout(() => {
+      setServerError("");
+    }, time);
   };
 
   return (
     <>
       <div className="w-full h-screen flex items-center justify-center">
-        <div className="font-medium sm:absolute left-0 top-0 sm:m-8 sm:rounded bg-emerald-400 p-5">
-          <p>Invalid Credentials</p>
-        </div>
+        {serverError && (
+          <div className="font-medium sm:absolute left-0 top-0 sm:m-8 sm:rounded bg-emerald-300 p-5">
+            <p>{serverError}</p>
+          </div>
+        )}
         <div className="shadow-lg p-10 sm:rounded-xl">
           <div>
             <h2 className="font-bold">Create Your Account</h2>
