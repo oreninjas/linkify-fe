@@ -1,8 +1,11 @@
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../lib/api";
+import { useAuthStore } from "../zustand";
 
 const LoginPage = () => {
+  const { setIsAuthenticated, setUserInfo } = useAuthStore();
+
   // Form data
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,14 +18,13 @@ const LoginPage = () => {
     e.preventDefault();
 
     try {
-      await axios({
-        method: "POST",
-        url: "http://localhost:3000/api/auth/login",
-        data: {
-          email,
-          password,
-        },
+      const response = await api.post("/api/auth/login", {
+        email,
+        password,
       });
+      console.log(response);
+      setIsAuthenticated(true);
+      setUserInfo(response.data)
       navigate("/dashboard");
     } catch (error: any) {
       const message =
@@ -48,9 +50,9 @@ const LoginPage = () => {
         )}
         <div className="shadow-lg p-10 sm:rounded-xl">
           <div>
-            <h2 className="font-bold">Create Your Account</h2>
+            <h2 className="font-bold">Log In to Continue</h2>
             <p className="font-light text-sm mt-1 text-balance">
-              Make it yours. Create your account and get started today
+              Welcome back. Let's pick up where you left off!
             </p>
           </div>
           <div className="w-full h-[1px] bg-zinc-300 my-5"></div>
