@@ -14,10 +14,7 @@ const Login = () => {
     axios
       .post("/api/auth/register", { email, password })
       .then((res) => {
-        console.log(res.data);
-        localStorage.setItem("token", res.data.token);
-        
-        navigate("/");
+        navigate("/dashboard");
       })
       .catch((err) => {
         console.log(err);

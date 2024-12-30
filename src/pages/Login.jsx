@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "../config/axios.js";
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -14,8 +14,7 @@ const Login = () => {
     axios
       .post("/api/auth/login", { email, password })
       .then((res) => {
-        console.log(res.data);
-        navigate("/");
+        navigate("/dashboard");
       })
       .catch((err) => {
         console.log(err);
