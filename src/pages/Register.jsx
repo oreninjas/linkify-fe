@@ -14,6 +14,7 @@ const Login = () => {
     axios
       .post("/api/auth/register", { email, password })
       .then((res) => {
+        console.log(res);
         navigate("/dashboard");
       })
       .catch((err) => {
