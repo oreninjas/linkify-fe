@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "../config/axios.js";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Card from "../components/Card.jsx";
 import Create_Button from "../components/Create_Button.jsx";
 
