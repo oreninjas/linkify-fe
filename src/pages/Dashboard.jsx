@@ -21,7 +21,7 @@ const Dashboard = () => {
 
   return (
     <div className="w-full h-screen">
-      {userData && userData.length > 0 ? (
+      {userData && userData.length > 0 && (
         <div className="flex gap-10 p-10 flex-wrap">
           {userData.map((data, index) => (
             <Card
@@ -31,10 +31,6 @@ const Dashboard = () => {
               id={data._id}
             />
           ))}
-          {userData.length < 5 && <Create_Button />}
-        </div>
-      ) : (
-        <div className="flex justify-center items-center h-full">
           <Create_Button />
         </div>
       )}

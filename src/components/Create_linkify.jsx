@@ -9,10 +9,13 @@ const Create_linkify = () => {
   if (isOff == false) {
     return (
       <div
-        onClick={() => stopVisiblity()}
+        onClick={stopVisiblity}
         className="absolute w-full h-full left-0 top-0 flex justify-center items-center backdrop-blur-sm"
       >
-        <div className="bg-white p-10 md:rounded-lg shadow-2xl font-light scale-95 transition-transform">
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="bg-white p-10 md:rounded-lg shadow-2xl font-light scale-95 transition-transform"
+        >
           <form
             onSubmit={(e) => e.preventDefault()}
             action="/api/linkify/create"
