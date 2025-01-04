@@ -17,14 +17,14 @@ const LinkifyPage = () => {
   }, []);
 
   return (
-    <div className="w-full h-screen p-5 flex items-center justify-center">
-      <div className="flex flex-wrap gap-5 justify-center">
-        {/* Multiple Links components */}
-        <Links />
+    <div className="w-full h-screen md:grid md:grid-cols-3">
+      <div className="hidden md:block w-full h-full"></div>
+      <div className="w-full h-full flex flex-col items-center justify-center gap-5 p-5 md:p-16">
         <Links />
         <Links />
         <Links />
       </div>
+      <div className="hidden md:block"></div>
     </div>
   );
 };
