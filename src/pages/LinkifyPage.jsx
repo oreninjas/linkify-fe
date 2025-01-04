@@ -1,11 +1,32 @@
-const LinkifyPage = () => {
-  return (
-    <div className="bg-zinc-800 w-full h-screen p-5">
-      <h2>iFaiyan</h2>
-      {/* Model */}
-      <div className="w-full h-1/5 bg-white"></div>
-    </div>
-  )
-}
+import { useEffect } from "react";
+import axios from "../config/axios.js";
+import { useParams } from "react-router-dom";
+import Links from "../components/Links.jsx";
 
-export default LinkifyPage
+const LinkifyPage = () => {
+  const { id } = useParams();
+  useEffect(() => {
+    axios
+      .get(`/api/linkify/fetch/${id}`)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  return (
+    <div className="w-full h-screen p-5 flex items-center justify-center">
+      <div className="flex flex-wrap gap-5 justify-center">
+        {/* Multiple Links components */}
+        <Links />
+        <Links />
+        <Links />
+        <Links />
+      </div>
+    </div>
+  );
+};
+
+export default LinkifyPage;
