@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Links = () => {
+const Links = ({ title, description }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -12,12 +12,12 @@ const Links = () => {
         } flex flex-col justify-center items-center p-4 transition-shadow duration-300 ease-in-out`}
       >
         <h2 className="font-medium text-xl text-gray-800 mb-2 text-center md:text-left">
-          Management
+          {title}
         </h2>
       </div>
       {open && (
         <div className="shadow-lg w-full h-full rounded-b-lg p-5">
-          Hello world
+          {description}
         </div>
       )}
     </div>
