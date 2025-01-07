@@ -21,7 +21,7 @@ const Dashboard = () => {
 
   return (
     <div className="w-full h-screen">
-      {userData && userData.length > 0 && (
+      {userData && (
         <div className="flex gap-10 p-10 flex-wrap">
           {userData.map((data, index) => (
             <Card

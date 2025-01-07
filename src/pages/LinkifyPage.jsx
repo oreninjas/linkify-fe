@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "../config/axios.js";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Links from "../components/Links.jsx";
 import Create_link from "../components/Create_link.jsx";
 
 const LinkifyPage = () => {
   const { id } = useParams();
   const [responseData, setResponseData] = useState(null);
+  const navigate = useNavigate();
 
   const fetchFunction = async () => {
     try {
@@ -14,6 +15,7 @@ const LinkifyPage = () => {
       setResponseData(res.data);
     } catch (error) {
       console.log(`Something went wrong while fetching linkify ${error}`);
+      navigate("/");
     }
   };
 
@@ -26,7 +28,7 @@ const LinkifyPage = () => {
       <div className="left hidden md:block w-full h-full"></div>
       <div className="mid w-full h-full flex flex-col items-center justify-center gap-5 p-5 md:p-16 bg-green-300 overflow-y-scroll">
         {responseData &&
-          responseData[0].categories.map((item, index) => (
+          responseData[0].categories.map((item) => (
             <Links
               key={item._id}
               title={item.category}
@@ -37,7 +39,9 @@ const LinkifyPage = () => {
         {/* <Links /> */}
       </div>
       <div className="end hidden md:block p-10">
-        {responseData && <Create_link categories={responseData.categories} />}
+        {responseData && (
+          <Create_link categories={responseData[0].categories} />
+        )}
       </div>
     </div>
   );
