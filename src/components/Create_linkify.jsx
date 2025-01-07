@@ -6,6 +6,11 @@ const Create_linkify = () => {
     setIsOff(true);
   };
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+    alert("Hello world!");
+  };
+
   if (isOff == false) {
     return (
       <div
@@ -16,11 +21,7 @@ const Create_linkify = () => {
           onClick={(e) => e.stopPropagation()}
           className="bg-white p-10 md:rounded-lg shadow-2xl font-light scale-95 transition-transform"
         >
-          <form
-            onSubmit={(e) => e.preventDefault()}
-            action="/api/linkify/create"
-            method="post"
-          >
+          <form onSubmit={() => submitHandler(e)}>
             <input
               className="w-full px-5 py-2 rounded-lg border border-gray-300 shadow-sm focus::ring outline-none"
               type="text"

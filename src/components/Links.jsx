@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Links = ({ title, description }) => {
+const Links = ({ title, description, link }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -16,8 +16,14 @@ const Links = ({ title, description }) => {
         </h2>
       </div>
       {open && (
-        <div className="shadow-lg w-full h-full rounded-b-lg p-5">
-          {description}
+        <div className="shadow-lg w-full h-full rounded-b-lg text-start px-10 py-10 bg-[#F5F5F5] gap-2">
+          <p>{description}</p>
+          <p>
+            Link:{" "}
+            <a href={link} target="_blank" className="text-blue-500">
+              {link}
+            </a>
+          </p>
         </div>
       )}
     </div>

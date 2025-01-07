@@ -12,7 +12,6 @@ const LinkifyPage = () => {
     try {
       const res = await axios.get(`/api/linkify/fetch/${id}`);
       setResponseData(res.data);
-      console.log(res.data);
     } catch (error) {
       console.log(`Something went wrong while fetching linkify ${error}`);
     }
@@ -25,19 +24,20 @@ const LinkifyPage = () => {
   return (
     <div className="w-full h-screen md:grid md:grid-cols-3">
       <div className="left hidden md:block w-full h-full"></div>
-      <div className="mid w-full h-full flex flex-col items-center justify-center gap-5 p-5 md:p-16 bg-green-300">
+      <div className="mid w-full h-full flex flex-col items-center justify-center gap-5 p-5 md:p-16 bg-green-300 overflow-y-scroll">
         {responseData &&
           responseData[0].categories.map((item, index) => (
             <Links
-              key={index}
+              key={item._id}
               title={item.category}
               description={item.description}
+              link={item.link}
             />
           ))}
         {/* <Links /> */}
       </div>
       <div className="end hidden md:block p-10">
-        <Create_link />
+        {responseData && <Create_link categories={responseData.categories} />}
       </div>
     </div>
   );
