@@ -1,42 +1,37 @@
 import { useParams } from "react-router-dom";
 import axios from "../config/axios.js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import CreatableSelect from "react-select/creatable";
 
 const Create_link = ({ categories }) => {
   const { id } = useParams(); // linkify Id
   const [on, setOn] = useState(false);
-  const [isCustom, setIsCustom] = useState(false);
-  // form values
+  // Form Values
+  const [selectedValue, setSelectedValue] = useState("");
   const [description, setDescription] = useState("");
-  const [customValue, setCustomValue] = useState(""); // one of form value
   const [link, setLink] = useState("");
-
-  const handleSelectChange = (e) => {
-    const value = e.target.value;
-    if (value === "custom") {
-      setIsCustom(true);
-    } else {
-      setIsCustom(false);
-      setCustomValue("");
-    }
-  };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log("working");
 
     try {
       axios.post(`/api/work/link/create/${id}`, {
         description,
         link,
-        category: customValue,
+        header: selectedValue,
       });
+      setOn(false);
     } catch (error) {
       console.log(
         `Something went wrong while trying to create new link:  ${error.message}`
       );
     }
   };
+
+  const categoryOptions = categories.map((item) => ({
+    value: item._id,
+    label: item.category,
+  }));
 
   return (
     <div className="w-full h-full flex justify-end md:items-end p-4">
@@ -45,35 +40,16 @@ const Create_link = ({ categories }) => {
           onSubmit={submitHandler}
           className="w-full max-w-md bg-white shadow-xl rounded-lg flex flex-col p-6 space-y-4"
         >
-          <div className="relative">
-            {!isCustom ? (
-              <select
-                className="border-2 border-gray-300 rounded-md p-2 w-full"
-                onChange={handleSelectChange}
-                value={customValue}
-              >
-                <option>Select an option</option>
-                {categories &&
-                  categories.map((item) => (
-                    <option key={item._id} value={item._id}>
-                      {item.category}
-                    </option>
-                  ))}
-                <option value="custom">Custom...</option>
-              </select>
-            ) : (
-              <input
-                type="text"
-                className="border-2 border-gray-300 rounded-md p-2 w-full"
-                value={customValue}
-                onChange={(e) => setCustomValue(e.target.value)}
-                placeholder="Enter custom name"
-              />
-            )}
-          </div>
+          <CreatableSelect
+            isClearable
+            options={categoryOptions}
+            onChange={(selectedOption) =>
+              setSelectedValue(selectedOption ? selectedOption.value : "")
+            }
+          />
 
           <textarea
-            className="border-2 border-gray-300 rounded-md p-2 w-full"
+            className="border rounded-md p-2 w-full"
             name="description"
             placeholder="Write a description..."
             onChange={(e) => setDescription(e.target.value)}
@@ -84,7 +60,7 @@ const Create_link = ({ categories }) => {
             type="text"
             name="link"
             placeholder="Paste link here"
-            className="border-2 border-gray-300 rounded-md p-2 w-full"
+            className="border rounded-md p-2 w-full"
             onChange={(e) => setLink(e.target.value)}
             value={link}
           />
