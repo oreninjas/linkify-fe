@@ -41,8 +41,9 @@ const LinkifyPage = () => {
         {responseData && responseData.categories?.length > 0 ? (
           responseData.categories.map((item) => (
             <Links
+              onClick={() => fetchLinks(item._id)}
               key={item._id}
-              title={item.categories}
+              header={item.header}
               description={item.description}
               link={item.link}
             />

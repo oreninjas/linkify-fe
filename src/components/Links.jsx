@@ -19,7 +19,7 @@ const Links = ({ header, description, link }) => {
         <div className="shadow-lg w-full h-full rounded-b-lg text-start px-10 py-10 bg-[#F5F5F5] gap-2">
           <p>{description}</p>
           <p>
-            Link:{" "}
+            {/* Link:{" "} */}
             <a href={link} target="_blank" className="text-blue-500">
               {link}
             </a>
